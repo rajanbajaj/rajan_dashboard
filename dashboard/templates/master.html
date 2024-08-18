@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  {% load bootstrap5 %}
+  {% load static %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+</head>
+<body>
+
+<div class="container">
+    <h1>OI Gainers</h1>
+    <div id="oi-gainers"></div>
+
+    <h1>OI Losers</h1>
+    <div id="oi-losers"></div>
+  {% block content %}
+  {% endblock %}
+
+  {{ API_BASE_URL|json_script:"api-base-url" }}
+  <script src="{% static 'js/all.js' %}"></script>
+</div>
+</body>
+</html>
