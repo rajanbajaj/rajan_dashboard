@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>{% block title %}{% endblock %}</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Stock Analysis{% endblock %}</title>
   {% load bootstrap5 %}
   {% load static %}
   {% bootstrap_css %}
@@ -9,39 +11,52 @@
 </head>
 <body>
 
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Stock Dashboard</a>
+  </div>
+</nav>
+
 <div class="container">
-    <h1>OI Gainers</h1>
-    <div id="oi-gainers"></div>
+  <h1 class="text-center mb-4">Stock Patterns Analysis</h1>
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>OI Gainers</th>
+        <th>OI Losers</th>
+        <th>Bullish Engulfing</th>
+        <th>Doji</th>
+        <th>Rising Wedge</th>
+        <th>Falling Wedge</th>
+	<th>Hammer</th>
+	<th>Near 52W High</th>
+	<th>Near 52W Low</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="oi-gainers"></td>
+        <td id="oi-losers"></td>
+        <td id="bullish-engullfing"></td>
+        <td id="doji"></td>
+        <td id="rising-wedge"></td>
+        <td id="falling-wedge"></td>
+        <td id="hammer"></td>
+        <td id="near-52week-high"></td>
+        <td id="near-52week-low"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-    <h1>OI Losers</h1>
-    <div id="oi-losers"></div>
+{% block content %}
+{% endblock %}
 
-    <h1>Bullish Engullfing</h1>
-    <div id="bullish-engullfing"></div>
-
-    <h1>Doji</h1>
-    <div id="doji"></div>
-
-    <h1>Rising Wedge</h1>
-    <div id="rising-wedge"></div>
-
-    <h1>Falling Wedge</h1>
-    <div id="falling-wedge"></div>
-
-    <h1>Hammer</h1>
-    <div id="hammer"></div>
-
-    <h1>Near 52 Weeks High</h1>
-    <div id="near-52week-high"></div>
-
-     <h1>Near 52 Weeks Low</h1>
-    <div id="near-52week-low"></div>
-
-  {% block content %}
-  {% endblock %}
+  <footer class="mt-4 text-center">
+    <p>&copy; 2024 Rajan Dashboard</p>
+  </footer>
 
   {{ API_BASE_URL|json_script:"api-base-url" }}
   <script src="{% static 'js/all.js' %}"></script>
-</div>
 </body>
 </html>
