@@ -39,5 +39,5 @@ function loadOILosers() {
 }
 loadOIGainers()
 loadOILosers()
-setInterval(loadOIGainers, 5000);
-setInterval(loadOILosers, 5000);
+setInterval(loadOIGainers, 60000);
+setInterval(loadOILosers, 60000);

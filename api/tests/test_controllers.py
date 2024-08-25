@@ -30,3 +30,46 @@ class AllControllersTest(TestCase):
         response_data = json.loads(response.content)
         self.assertTrue('data' in response_data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_bullish_engullfing(self):
+        response = client.get(reverse('api.bullish_engullfing'))
+        response_data = json.loads(response.content)
+        self.assertTrue('data' in response_data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_doji(self):
+        response = client.get(reverse('api.doji'))
+        response_data = json.loads(response.content)
+        self.assertTrue('data' in response_data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_falling_wedge(self):
+        response = client.get(reverse('api.falling_wedge'))
+        response_data = json.loads(response.content)
+        self.assertTrue('data' in response_data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_rising_wedge(self):
+        response = client.get(reverse('api.rising_wedge'))
+        response_data = json.loads(response.content)
+        self.assertTrue('data' in response_data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_hammer(self):
+        response = client.get(reverse('api.hammer'))
+        response_data = json.loads(response.content)
+        self.assertTrue('data' in response_data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_near_52week_high(self):
+        response = client.get(reverse('api.near_52week_high'))
+        response_data = json.loads(response.content)
+        self.assertTrue('data' in response_data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_near_52week_low(self):
+        response = client.get(reverse('api.near_52week_low'))
+        response_data = json.loads(response.content)
+        self.assertTrue('data' in response_data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
