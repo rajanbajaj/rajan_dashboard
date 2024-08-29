@@ -31,6 +31,7 @@
 	<th>Hammer</th>
 	<th>Near 52W High</th>
 	<th>Near 52W Low</th>
+	<th onClick="clearWatchlist()">Watchlist</th>
       </tr>
     </thead>
     <tbody>
@@ -44,6 +45,7 @@
         <td id="hammer"></td>
         <td id="near-52week-high"></td>
         <td id="near-52week-low"></td>
+	<td id="watchlist"></td>
       </tr>
     </tbody>
   </table>
@@ -57,6 +59,7 @@
   </footer>
 
   {{ API_BASE_URL|json_script:"api-base-url" }}
+  <script src="{% static 'js/watchlist.js' %}"></script>
   <script src="{% static 'js/all.js' %}"></script>
 </body>
 </html>

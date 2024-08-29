@@ -67,16 +67,22 @@ def is_symbol_forms_hammer(request, symbol):
     return JsonResponse({'data': result}) 
 
 def get_watchlist(request):
-    fo = open(CANDLESTICK_PATTERN_DIR + '/' + WATCHLIST_FILE, 'r')
-    lines = fo.read()
-    lines = lines.splitlines()
-    return JsonResponse({'data': lines})
+    try:
+        fo = open(CANDLESTICK_PATTERN_DIR + '/' + WATCHLIST_FILE, 'r')
+        lines = fo.read()
+        lines = lines.splitlines()
+        fo.close()
+
+        return JsonResponse({'data': lines})
+    except:
+        return JsonResponse({'data': []})
 
 def has_watchlist(request, symbol):
     fo = open(CANDLESTICK_PATTERN_DIR + '/' + WATCHLIST_FILE, 'r')
     lines = fo.read()
     lines = lines.splitlines()
-    
+    fo.close()
+
     result = False
     for i in range(0, len(lines)):
         result = lines[i] == symbol
@@ -86,20 +92,28 @@ def add_to_watchlist(request, symbol):
     fo = open(CANDLESTICK_PATTERN_DIR + '/' + WATCHLIST_FILE, 'a')
     fo.write(symbol)
     fo.write('\n')
+    fo.close()
     return JsonResponse({})
 
 def remove_from_watchlist(request, symbol):
-    fo = open(CANDLESTICK_PATTERN_DIR + '/' + WATCHLIST_FILE, 'r+')
-    lines = fo.readlines()
+    fo = open(CANDLESTICK_PATTERN_DIR + '/' + WATCHLIST_FILE, 'r')
+    lines = fo.read()
+    lines = lines.splitlines()
     line_count = len(lines)
+    fo.close()
 
     result = []
     for i in range(0, line_count):
-        if symbol != lines[i]:
-            result.append(symbol)
+        print(symbol + '::' + lines[i].strip('\n'))
+        if symbol != lines[i].strip('\n'):
+            result.append(lines[i] + '\n')
 
+    fo = open(CANDLESTICK_PATTERN_DIR + '/' + WATCHLIST_FILE, 'w')
     fo.writelines(result)
+    fo.close()
     return JsonResponse({})
 
-def clear_watchlist(request, symbol):
+def clear_watchlist(request):
     os.remove(CANDLESTICK_PATTERN_DIR + '/' + WATCHLIST_FILE)
+
+    return JsonResponse({})

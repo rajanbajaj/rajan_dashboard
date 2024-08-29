@@ -1,18 +1,37 @@
 const API_BASE_URL = JSON.parse(document.getElementById('api-base-url').textContent);
+let isAddEventSet = false;
+function updateEventListeners() {
+    if (isAddEventSet) {
+        return
+    }
 
+    isAddEventSet = true;
+	
+    // Select all elements with the class name 'watchlist-add-button'
+    let watchlistButtons = document.querySelectorAll('.watchlist-add-button');
+    // Loop through each element and add an event listener
+    watchlistButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Get the data-symbol attribute
+            let symbol = this.getAttribute('data-symbol');
+            // Call the addToWatchlist function with the symbol as the parameter
+            addToWatchlist(symbol);
+        });
+    });
+}
 function createList(items) {
     const ul = document.createElement('ul');
     items.forEach((item) => {
         const li = document.createElement('li');
-        li.textContent = item;
+        li.innerHTML = `${item}<span type="button" class="watchlist-add-button" data-symbol=${item}>+</span>`;
         ul.appendChild(li);
-    })
+    });
     return ul;
 }
 
 function loadOIGainers() {
     try {
-        fetch(`${API_BASE_URL}/oi-gainers`).then((response) => {
+	    fetch(`${API_BASE_URL}/oi-gainers`).then((response) => {
             response.json().then((value) => {
                 const list = createList(value.data);
                 document.getElementById('oi-gainers').innerHTML = '';
@@ -148,3 +167,4 @@ loadNear52WeekHigh()
 loadNear52WeekLow()
 setInterval(loadOIGainers, 60000);
 setInterval(loadOILosers, 60000);
+setTimeout(updateEventListeners, 3000);

@@ -16,8 +16,8 @@ urlpatterns = [
     path('near-52week-low', get_near_52week_low, name='api.near_52week_low'),
     path('hammer/<symbol>', is_symbol_forms_hammer, name='api.hammer.symbol'),
     path('watchlist/add/<symbol>', add_to_watchlist, name='api.watchlist.add'),
-    path('watchlist/remove/<symbol>', add_to_watchlist, name='api.watchlist.remove'),
-    path('watchlist/clear', add_to_watchlist, name='api.watchlist.clear'),
+    path('watchlist/remove/<symbol>', remove_from_watchlist, name='api.watchlist.remove'),
+    path('watchlist/clear', clear_watchlist, name='api.watchlist.clear'),
     path('watchlist/get', get_watchlist, name='api.watchlist.get'),
     path('watchlist/has/<symbol>', has_watchlist, name='api.watchlist.has'),
 ]
