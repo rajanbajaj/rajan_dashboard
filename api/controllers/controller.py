@@ -1,7 +1,8 @@
 from django.http import JsonResponse
 from django.conf import settings
-from rajan_nse import Strategies
+from rajan_nse import Strategies, CandleStickPatterns
 import pandas as pd
+import os
 
 CANDLESTICK_PATTERN_DIR = "./api/data"
 BULLISH_ENGULLFING_FILE = 'bullishEngullfing.csv'
@@ -11,6 +12,7 @@ RISING_WEDGE_FILE = 'risingWedge.csv'
 HAMMER_FILE = 'hammer.csv'
 NEAR_52WEEK_HIGH_FILE = 'near52WeekHigh.csv'
 NEAR_52WEEK_LOW_FILE = 'near52WeekLow.csv'
+WATCHLIST_FILE = 'watchlist.txt'
 
 def version(request):
     return JsonResponse({'version': settings.API_VERSION})
@@ -58,3 +60,46 @@ def get_near_52week_high(request):
 def get_near_52week_low(request):
     df = pd.read_csv(CANDLESTICK_PATTERN_DIR + '/' + NEAR_52WEEK_LOW_FILE)
     return JsonResponse({'data': df['0'].tolist()})
+
+def is_symbol_forms_hammer(request, symbol):
+    candleStickPatterns = CandleStickPatterns()
+    result = candleStickPatterns.hammerPattern(symbol, True, 5);
+    return JsonResponse({'data': result}) 
+
+def get_watchlist(request):
+    fo = open(CANDLESTICK_PATTERN_DIR + '/' + WATCHLIST_FILE, 'r')
+    lines = fo.read()
+    lines = lines.splitlines()
+    return JsonResponse({'data': lines})
+
+def has_watchlist(request, symbol):
+    fo = open(CANDLESTICK_PATTERN_DIR + '/' + WATCHLIST_FILE, 'r')
+    lines = fo.read()
+    lines = lines.splitlines()
+    
+    result = False
+    for i in range(0, len(lines)):
+        result = lines[i] == symbol
+    return JsonResponse({'data': result})
+
+def add_to_watchlist(request, symbol):
+    fo = open(CANDLESTICK_PATTERN_DIR + '/' + WATCHLIST_FILE, 'a')
+    fo.write(symbol)
+    fo.write('\n')
+    return JsonResponse({})
+
+def remove_from_watchlist(request, symbol):
+    fo = open(CANDLESTICK_PATTERN_DIR + '/' + WATCHLIST_FILE, 'r+')
+    lines = fo.readlines()
+    line_count = len(lines)
+
+    result = []
+    for i in range(0, line_count):
+        if symbol != lines[i]:
+            result.append(symbol)
+
+    fo.writelines(result)
+    return JsonResponse({})
+
+def clear_watchlist(request, symbol):
+    os.remove(CANDLESTICK_PATTERN_DIR + '/' + WATCHLIST_FILE)
