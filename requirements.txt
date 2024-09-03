@@ -1,3 +1,13 @@
 Django==4.2.15
 djangorestframework==3.15.2
-rajan_nse==1.2.5
+pandas==2.2.2
+rajan_nse==1.2.6
+Requests==2.32.3
+django-bootstrap-v5==1.0.11
+matplotlib==3.9.1.post1
+matplotlib-inline==0.1.7
+seaborn==0.13.2
+sklearn==0.0
+tqdm==4.66.5
+alive-progress==3.1.5
+
